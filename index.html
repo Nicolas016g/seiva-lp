@@ -2,12 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Seiva Vila Harmonia | Alto padrão em Araraquara · Perplan</title>
   <meta name="description" content="Apartamentos de 157 e 206 m², 3 ou 4 suítes, no Vila Harmonia. O melhor ângulo da sua vida. Construtora Perplan.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -15,7 +15,11 @@
 
   <header class="nav" data-nav>
     <a class="brand" href="#topo">Seiva<span>Vila Harmonia</span></a>
-    <nav>
+    <button class="menu-btn" type="button" data-menu-btn aria-expanded="false" aria-controls="menu">
+      <span class="menu-btn-bars" aria-hidden="true"></span>
+      Menu
+    </button>
+    <nav id="menu" data-menu>
       <a href="#apartamento">O apartamento</a>
       <a href="#plantas">Plantas</a>
       <a href="#lazer">Lazer</a>
@@ -181,23 +185,69 @@
     </section>
 
     <section class="lead" id="visita">
-      <div class="wrap lead-box">
-        <p class="chapter light">06 — Visita</p>
-        <h2>Agende e veja o decorado.</h2>
-        <p>Fale com a gente no WhatsApp. Unidade, andar e condições no atendimento.</p>
-        <form class="lead-form" data-lead>
-          <label>Nome<input name="nome" required autocomplete="name"></label>
-          <label>Telefone<input name="telefone" required type="tel" autocomplete="tel"></label>
-          <label>Interesse
-            <select name="interesse">
-              <option value="157">Torre Arbo · 157 m²</option>
-              <option value="206">Torre Raízes · 206 m²</option>
-              <option value="ambos">Quero as duas opções</option>
+      <div class="wrap lead-layout">
+        <div class="lead-copy">
+          <p class="chapter light">06 — Visita</p>
+          <h2>Agende e veja o decorado.</h2>
+          <p>Preencha os dados. Recebemos o pedido por e-mail e seguimos o atendimento no WhatsApp, com unidades, andares e condições.</p>
+          <ul class="lead-points">
+            <li>Atendimento no mesmo dia útil</li>
+            <li>Visita ao decorado com hora marcada</li>
+            <li>Torre Arbo 157 m² ou Raízes 206 m²</li>
+          </ul>
+        </div>
+        <form class="lead-card" data-lead novalidate>
+          <label class="hp" aria-hidden="true">
+            Empresa
+            <input name="empresa" type="text" tabindex="-1" autocomplete="off">
+          </label>
+          <div class="field-row">
+            <label>
+              Nome completo
+              <input name="nome" type="text" required autocomplete="name" placeholder="Como devemos te chamar">
+            </label>
+            <label>
+              E-mail
+              <input name="email" type="email" required autocomplete="email" inputmode="email" placeholder="voce@email.com">
+            </label>
+          </div>
+          <div class="field-row">
+            <label>
+              WhatsApp
+              <input name="telefone" type="tel" required autocomplete="tel" inputmode="tel" placeholder="(16) 99999-0000">
+            </label>
+            <label>
+              Interesse
+              <select name="interesse" required>
+                <option value="" disabled selected>Selecione a torre</option>
+                <option value="157">Torre Arbo · 157 m²</option>
+                <option value="206">Torre Raízes · 206 m²</option>
+                <option value="ambos">Quero as duas opções</option>
+              </select>
+            </label>
+          </div>
+          <label>
+            Melhor horário para contato
+            <select name="horario">
+              <option value="qualquer">Qualquer horário</option>
+              <option value="manha">Manhã</option>
+              <option value="tarde">Tarde</option>
+              <option value="noite">Noite</option>
             </select>
           </label>
-          <button class="btn btn-gold" type="submit">Enviar no WhatsApp</button>
+          <label>
+            <span>Mensagem <span class="optional">(opcional)</span></span>
+            <textarea name="mensagem" rows="3" placeholder="Andar, vista, prazo… o que for importante para você."></textarea>
+          </label>
+          <label class="consent">
+            <input name="lgpd" type="checkbox" required>
+            <span>Autorizo o contato comercial do Seiva Vila Harmonia / Perplan pelos dados informados, de acordo com a LGPD.</span>
+          </label>
+          <p class="form-error" data-form-error hidden></p>
+          <p class="form-ok" data-form-ok hidden>Pedido enviado. Vamos falar com você no WhatsApp em instantes.</p>
+          <button class="btn btn-gold" type="submit" data-submit>Quero agendar visita</button>
+          <p class="form-note">Seus dados vão para a equipe comercial. Depois do envio, abrimos o WhatsApp para agilizar o contato.</p>
         </form>
-        <a class="wa-direct" href="https://wa.me/5516997082808?text=Olá! Quero conhecer o Seiva Vila Harmonia.">Ou chamar agora</a>
       </div>
     </section>
   </main>
@@ -216,6 +266,7 @@
     </div>
   </footer>
 
+  <a class="sticky-cta" href="#visita">Agendar visita</a>
   <button class="back-top" type="button" data-top aria-label="Voltar ao topo">↑</button>
 
   <script src="app.js"></script>
