@@ -189,7 +189,7 @@
         <div class="lead-copy">
           <p class="chapter light">06 — Visita</p>
           <h2>Agende e veja o decorado.</h2>
-          <p>Preencha os dados. Recebemos o pedido por e-mail e seguimos o atendimento no WhatsApp, com unidades, andares e condições.</p>
+          <p>Preencha o formulário. O pedido chega para a equipe comercial e alguém retorna para marcar a visita ao decorado.</p>
           <ul class="lead-points">
             <li>Atendimento no mesmo dia útil</li>
             <li>Visita ao decorado com hora marcada</li>
@@ -197,6 +197,13 @@
           </ul>
         </div>
         <form class="lead-card" data-lead novalidate>
+          <div class="form-success" data-success hidden>
+            <p class="chapter">Pedido recebido</p>
+            <h3>Obrigado. Já registramos o seu interesse.</h3>
+            <p>A equipe comercial entra em contato com unidades, andares e condições.</p>
+            <a class="btn btn-gold" data-wa-success href="#" target="_blank" rel="noopener noreferrer">Falar agora no WhatsApp</a>
+          </div>
+          <div data-form-fields>
           <label class="hp" aria-hidden="true">
             Empresa
             <input name="empresa" type="text" tabindex="-1" autocomplete="off">
@@ -244,9 +251,9 @@
             <span>Autorizo o contato comercial do Seiva Vila Harmonia / Perplan pelos dados informados, de acordo com a LGPD.</span>
           </label>
           <p class="form-error" data-form-error hidden></p>
-          <p class="form-ok" data-form-ok hidden>Pedido enviado. Vamos falar com você no WhatsApp em instantes.</p>
           <button class="btn btn-gold" type="submit" data-submit>Quero agendar visita</button>
-          <p class="form-note">Seus dados vão para a equipe comercial. Depois do envio, abrimos o WhatsApp para agilizar o contato.</p>
+          <p class="form-note">Ao enviar, seus dados são registrados para contato comercial. Sem spam.</p>
+          </div>
         </form>
       </div>
     </section>

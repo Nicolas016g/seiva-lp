@@ -1,4 +1,5 @@
 const WA = "5516997082808";
+const LEAD_EMAIL = "contato@alabarda.com.br";
 const nav = document.querySelector("[data-nav]");
 const form = document.querySelector("[data-lead]");
 const topBtn = document.querySelector("[data-top]");
@@ -6,9 +7,23 @@ const menuBtn = document.querySelector("[data-menu-btn]");
 const menu = document.querySelector("[data-menu]");
 const stickyCta = document.querySelector(".sticky-cta");
 const formError = document.querySelector("[data-form-error]");
-const formOk = document.querySelector("[data-form-ok]");
 const submitBtn = document.querySelector("[data-submit]");
+const successBox = document.querySelector("[data-success]");
+const waSuccess = document.querySelector("[data-wa-success]");
 const leadSection = document.querySelector("#visita");
+
+const INTEREST = {
+  "157": "Torre Arbo 157 m²",
+  "206": "Torre Raízes 206 m²",
+  ambos: "as duas torres",
+};
+
+const HORARIO = {
+  qualquer: "qualquer horário",
+  manha: "de manhã",
+  tarde: "à tarde",
+  noite: "à noite",
+};
 
 function closeMenu() {
   nav?.classList.remove("menu-open");
@@ -61,6 +76,69 @@ phoneInput?.addEventListener("input", () => {
   phoneInput.value = maskPhone(phoneInput.value);
 });
 
+function showError(text) {
+  if (!formError) return;
+  formError.hidden = false;
+  formError.textContent = text;
+}
+
+function clearError() {
+  if (!formError) return;
+  formError.hidden = true;
+  formError.textContent = "";
+}
+
+function waText(payload) {
+  const extra = payload.mensagem ? ` Observação: ${payload.mensagem}` : "";
+  return `Olá! Sou ${payload.nome} (${payload.telefone} / ${payload.email}). Quero conhecer o Seiva Vila Harmonia — interesse em ${INTEREST[payload.interesse]}. Prefiro contato ${HORARIO[payload.horario] || "qualquer horário"}.${extra}`;
+}
+
+async function postJson(url, payload) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  let data = {};
+  try {
+    data = await response.json();
+  } catch {
+    data = {};
+  }
+  return { response, data };
+}
+
+async function sendLead(payload) {
+  try {
+    const api = await postJson("/api/lead", payload);
+    if (api.response.ok && api.data.ok !== false) return true;
+  } catch {
+    // Sem API no servidor estático: envia direto.
+  }
+
+  const { response, data } = await postJson(
+    `https://formsubmit.co/ajax/${encodeURIComponent(LEAD_EMAIL)}`,
+    {
+      _subject: `Novo lead Seiva Vila Harmonia — ${INTEREST[payload.interesse] || payload.interesse}`,
+      _template: "table",
+      _captcha: "false",
+      _replyto: payload.email,
+      nome: payload.nome,
+      email: payload.email,
+      whatsapp: payload.telefone,
+      interesse: INTEREST[payload.interesse] || payload.interesse,
+      horario: HORARIO[payload.horario] || payload.horario,
+      mensagem: payload.mensagem || "(sem observações)",
+      origem: "seiva-lp",
+    },
+  );
+
+  return response.ok && data.success !== false;
+}
+
 form?.addEventListener("submit", async (event) => {
   event.preventDefault();
   const data = new FormData(form);
@@ -75,18 +153,13 @@ form?.addEventListener("submit", async (event) => {
   };
   const lgpd = form.querySelector('[name="lgpd"]')?.checked;
 
-  const showError = (text) => {
-    if (formOk) formOk.hidden = true;
-    if (!formError) return;
-    formError.hidden = false;
-    formError.textContent = text;
-  };
+  clearError();
 
-  if (formError) {
-    formError.hidden = true;
-    formError.textContent = "";
+  if (payload.empresa) {
+    form.classList.add("is-sent");
+    if (successBox) successBox.hidden = false;
+    return;
   }
-  if (formOk) formOk.hidden = true;
 
   if (!payload.nome || !payload.email || !payload.telefone || !payload.interesse) {
     showError("Preencha nome, e-mail, WhatsApp e o interesse.");
@@ -105,40 +178,32 @@ form?.addEventListener("submit", async (event) => {
     return;
   }
 
-  const label = {
-    "157": "Torre Arbo 157 m²",
-    "206": "Torre Raízes 206 m²",
-    ambos: "as duas torres",
-  }[payload.interesse];
-  const when = {
-    qualquer: "qualquer horário",
-    manha: "de manhã",
-    tarde: "à tarde",
-    noite: "à noite",
-  }[payload.horario];
-  const extra = payload.mensagem ? ` Observação: ${payload.mensagem}` : "";
-  const text = `Olá! Sou ${payload.nome} (${payload.telefone} / ${payload.email}). Quero conhecer o Seiva Vila Harmonia — interesse em ${label}. Prefiro contato ${when}.${extra}`;
-
   form.classList.add("is-loading");
-  if (submitBtn) submitBtn.textContent = "Enviando…";
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Enviando…";
+  }
 
   try {
-    await fetch("/api/lead", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    const sent = await sendLead(payload);
+    if (!sent) {
+      showError("Não foi possível enviar agora. Tente de novo ou fale no WhatsApp.");
+      return;
+    }
+
+    if (waSuccess) {
+      waSuccess.href = `https://wa.me/${WA}?text=${encodeURIComponent(waText(payload))}`;
+    }
+    form.reset();
+    form.classList.add("is-sent");
+    if (successBox) successBox.hidden = false;
   } catch {
-    // Local ou falha de rede: o WhatsApp segue como canal de atendimento.
+    showError("Não foi possível enviar agora. Confira a conexão e tente de novo.");
+  } finally {
+    form.classList.remove("is-loading");
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Quero agendar visita";
+    }
   }
-
-  window.open(`https://wa.me/${WA}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
-
-  if (formOk) {
-    formOk.hidden = false;
-    formOk.textContent = "Pedido enviado. Vamos falar com você no WhatsApp em instantes.";
-  }
-  form.reset();
-  form.classList.remove("is-loading");
-  if (submitBtn) submitBtn.textContent = "Quero agendar visita";
 });

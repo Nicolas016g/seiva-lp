@@ -375,6 +375,16 @@ h1 {
 }
 .lead-card .btn { width: 100%; margin-top: 4px; }
 .lead-card.is-loading .btn { opacity: 0.7; pointer-events: none; }
+[data-form-fields] { display: grid; gap: 14px; }
+.lead-card.is-sent [data-form-fields] { display: none; }
+.form-success[hidden] { display: none; }
+.form-success h3 {
+  font-size: clamp(1.5rem, 3vw, 1.9rem);
+  margin: 8px 0 10px;
+  line-height: 1.2;
+}
+.form-success p { color: var(--muted); }
+.form-success .btn { margin-top: 18px; }
 .hp {
   position: absolute;
   width: 1px;
