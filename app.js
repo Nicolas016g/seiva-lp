@@ -103,7 +103,7 @@ function clearError() {
 
 function waText(payload) {
   const extra = payload.mensagem ? ` Observação: ${payload.mensagem}` : "";
-  return `Olá! Sou ${payload.nome} (${payload.telefone} / ${payload.email}). Quero conhecer o Seiva Vila Harmonia — interesse em ${INTEREST[payload.interesse]}. Prefiro contato ${HORARIO[payload.horario] || "qualquer horário"}.${extra}`;
+  return `Olá! Sou ${payload.nome} (${payload.telefone} / ${payload.email}). Quero conhecer o Seiva Vila Harmonia, interesse em ${INTEREST[payload.interesse]}. Prefiro contato ${HORARIO[payload.horario] || "qualquer horário"}.${extra}`;
 }
 
 async function postJson(url, payload) {
@@ -135,7 +135,7 @@ async function sendLead(payload) {
   const { response, data } = await postJson(
     `https://formsubmit.co/ajax/${encodeURIComponent(LEAD_EMAIL)}`,
     {
-      _subject: `Novo lead Seiva Vila Harmonia — ${INTEREST[payload.interesse] || payload.interesse}`,
+      _subject: `Novo lead Seiva Vila Harmonia, ${INTEREST[payload.interesse] || payload.interesse}`,
       _template: "table",
       _captcha: "false",
       _replyto: payload.email,

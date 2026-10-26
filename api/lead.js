@@ -78,7 +78,7 @@ export default async function handler(req, res) {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          _subject: `Novo lead Seiva Vila Harmonia — ${lead.interesse}`,
+          _subject: `Novo lead Seiva Vila Harmonia, ${lead.interesse}`,
           _template: "table",
           _captcha: "false",
           _replyto: lead.email,

@@ -41,7 +41,7 @@ button, input, select, textarea { font: inherit; }
 section[id] { scroll-margin-top: calc(var(--nav-h) + 10px); }
 .chapter {
   font-size: 0.78rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 600;
