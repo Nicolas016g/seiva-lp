@@ -164,6 +164,7 @@ h2 { font-size: clamp(1.85rem, 4.2vw, 3.25rem); line-height: 1.15; }
   color: var(--moss-deep) !important;
   font-weight: 700;
   text-align: center;
+  border-radius: 14px;
 }
 body.menu-open {
   overflow: hidden;
