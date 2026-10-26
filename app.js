@@ -25,9 +25,15 @@ const HORARIO = {
   noite: "à noite",
 };
 
+function isDesktopNav() {
+  return window.matchMedia("(min-width: 961px)").matches;
+}
+
 function closeMenu() {
   nav?.classList.remove("menu-open");
+  document.body.classList.remove("menu-open");
   menuBtn?.setAttribute("aria-expanded", "false");
+  if (menu) menu.hidden = !isDesktopNav();
 }
 
 function onScroll() {
@@ -48,8 +54,15 @@ topBtn?.addEventListener("click", () => {
 
 menuBtn?.addEventListener("click", () => {
   const open = nav.classList.toggle("menu-open");
+  document.body.classList.toggle("menu-open", open);
   menuBtn.setAttribute("aria-expanded", String(open));
+  if (menu) menu.hidden = !open;
 });
+
+window.addEventListener("resize", () => {
+  if (isDesktopNav()) closeMenu();
+});
+closeMenu();
 
 menu?.querySelectorAll("a").forEach((link) => {
   link.addEventListener("click", closeMenu);
