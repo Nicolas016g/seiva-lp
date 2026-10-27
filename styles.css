@@ -694,8 +694,8 @@ h1 {
   }
   .site-menu a:not(.nav-cta) { padding: 0; }
   .nav-cta {
-    padding: 3px 20px;
-    line-height: 1.15;
+    padding: 6px 20px;
+    line-height: 1.2;
     margin-top: 0;
     font-size: 0.95rem;
     font-weight: 600;
