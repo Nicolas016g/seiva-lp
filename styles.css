@@ -159,15 +159,15 @@ h2 { font-size: clamp(1.85rem, 4.2vw, 3.25rem); line-height: 1.15; }
 .nav-cta {
   border: 0;
   background: var(--gold);
-  padding: 8px 22px;
+  padding: 6px 16px;
   margin-top: 12px;
   color: var(--moss-deep) !important;
-  font-size: 0.95rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0;
-  line-height: 1.2;
+  line-height: 1;
   text-align: center;
-  border-radius: 14px;
+  border-radius: 999px;
   box-sizing: border-box;
 }
 body.menu-open {
@@ -694,10 +694,10 @@ h1 {
   }
   .site-menu a:not(.nav-cta) { padding: 0; }
   .nav-cta {
-    padding: 6px 20px;
-    line-height: 1.2;
+    padding: 4px 14px;
+    line-height: 1;
     margin-top: 0;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     font-weight: 600;
   }
   .sticky-cta { display: none !important; }
