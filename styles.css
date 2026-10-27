@@ -159,7 +159,7 @@ h2 { font-size: clamp(1.85rem, 4.2vw, 3.25rem); line-height: 1.15; }
 .nav-cta {
   border: 0;
   background: var(--gold);
-  padding: 12px 22px;
+  padding: 10px 22px;
   margin-top: 12px;
   color: var(--moss-deep) !important;
   font-size: 0.95rem;
@@ -694,7 +694,7 @@ h1 {
   }
   .site-menu a:not(.nav-cta) { padding: 0; }
   .nav-cta {
-    padding: 10px 20px;
+    padding: 7px 20px;
     margin-top: 0;
     font-size: 0.95rem;
     font-weight: 600;
