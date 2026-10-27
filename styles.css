@@ -162,7 +162,9 @@ h2 { font-size: clamp(1.85rem, 4.2vw, 3.25rem); line-height: 1.15; }
   padding: 14px 16px;
   margin-top: 12px;
   color: var(--moss-deep) !important;
-  font-weight: 700;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
   text-align: center;
   border-radius: 14px;
 }
@@ -690,8 +692,10 @@ h1 {
     white-space: nowrap;
   }
   .nav-cta {
-    padding: 10px 16px;
+    padding: 8px 14px;
     margin-top: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
   }
   .sticky-cta { display: none !important; }
 }
